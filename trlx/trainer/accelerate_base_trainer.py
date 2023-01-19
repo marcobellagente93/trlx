@@ -44,7 +44,7 @@ class AccelerateRLTrainer(BaseRLTrainer):
     def __init__(self, config, **kwargs):
         super().__init__(config, **kwargs)
         self.max_length = config.train.seq_length
-        self.accelerator = Accelerator(log_with=config.train.trackers)
+        self.accelerator = Accelerator(log_with=config.train.trackers, logging_dir=config.train.logging_dir)
         if int(os.environ.get("WORLD_SIZE", 1)) > 1:
             torch.distributed.barrier(device_ids=[int(os.environ.get("LOCAL_RANK", 0))])
 
